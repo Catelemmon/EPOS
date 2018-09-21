@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,8 +30,8 @@ SECRET_KEY = '&#&8w#1d7eukbyc9d13e1^zt_dy0%os=4))za0clk8(l12os6c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+AUTH_USER_MODEL = 'checkout_center.UserProfile'
 
 # Application definition
 
@@ -37,6 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'checkout_center.apps.CheckoutCenterConfig',
+    'crispy_forms',
+    'xadmin',
+    'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -74,14 +85,16 @@ WSGI_APPLICATION = 'EPOS.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'epos',
-        "USER": 'root',
-        "PASSWORD": "11235813",
-        "HOST": "127,0.0.1",
-        "PORT": 3306
+        'NAME': 'EPOS',
+        'HOST': 'localhost',
+        'USER': 'root',
+        'PASSWORD': '09170725',
+        'PORT': '3306',
+        "OPTIONS":{"init_command":"SET default_storage_engine=INNODB;"},
     }
 }
 
@@ -108,15 +121,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
